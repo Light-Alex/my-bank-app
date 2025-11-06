@@ -64,8 +64,7 @@ TRAE AI：字节出品的AI代码补全工具（好用）
 
 ## 交互时序图
 
-![银行DAPP时序图](img\银行DAPP时序图.png)
-
+<img src="img\银行DAPP时序图.png" alt="银行DAPP时序图"/>
 
 
 ## 参考B站仁科UP的视频
