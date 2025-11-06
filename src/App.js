@@ -105,7 +105,7 @@ function App() {
             const web3Instance = new Web3(window.ethereum);
             setWeb3(web3Instance);
             
-            const contract = new web3Instance.eth.Contract(ABI, '0x6b61b50e7fe9dabad97431c57a7242db8eb8be2e');
+            const contract = new web3Instance.eth.Contract(ABI, '0x6b61b50e7fe9dabad97431c57a7242db8eb8be2e'); // 请替换成自己的银行合约地址
             setBankContract(contract);
         } catch (error) {
             console.error('Wallet connection error:', error);
