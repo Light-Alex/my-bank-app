@@ -10,6 +10,9 @@ contract Bank {
     // 静态变量
     address public immutable token;
 
+    // 定义事件
+    event Deposit(address user, uint amount);
+
     constructor(address _token) {
         token = _token;
     }
@@ -34,6 +37,8 @@ contract Bank {
 
         deposited[msg.sender] += amount;
 
+        // 触发事件
+        emit Deposit(msg.sender, amount);
     }
 
     // 取款 withdraw（从银行合约中取款到钱包）

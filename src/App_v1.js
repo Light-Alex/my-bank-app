@@ -99,8 +99,7 @@ function App() {
         // 3. 获取智能合约 ABI + address
         // 使用ABI和合约地址创建合约实例
         // ABI定义了合约的方法接口，地址指定了部署的合约位置
-        // 0xa71d4CcF0FF76De742AEE54DC6CBFA215106ce08
-        const bankContract = new web3.eth.Contract(ABI, '0x6b61b50e7fe9dabad97431c57a7242db8eb8be2e');
+        const bankContract = new web3.eth.Contract(ABI, '0x6b61b50e7fe9dabad97431c57a7242db8eb8be2e'); // 替换成自己的银行合约
         // 将合约实例保存到状态中，用于后续的合约交互
         setBankContract(bankContract);
     }

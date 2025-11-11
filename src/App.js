@@ -93,26 +93,39 @@ function App() {
         }
     }, [bankContract, address, transferAmount, to, getMyDeposit]);
 
-    const connectWallet = useCallback(async () => {
-        try {
-            if (!window.ethereum) {
-                alert('请安装MetaMask钱包');
-                return;
-            }
-            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            setAddress(accounts[0]);
-            
-            const web3Instance = new Web3(window.ethereum);
-            setWeb3(web3Instance);
-            
-            const contract = new web3Instance.eth.Contract(ABI, '0x6b61b50e7fe9dabad97431c57a7242db8eb8be2e'); // 请替换成自己的银行合约地址
-            setBankContract(contract);
-        } catch (error) {
-            console.error('Wallet connection error:', error);
-            alert('钱包连接失败');
-        }
-    }, []);
+    
+    const connectWallet = async () => {
+        // 1. 获取钱包账户对象
+        // 通过MetaMask等钱包提供商的API获取用户账户列表
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        // 将第一个账户地址（通常是主账户）设置到状态中
+        setAddress(accounts[0]);
 
+        // 2. 连接web3
+        // 创建新的Web3实例，使用钱包提供的provider
+        const web3 = new Web3(window.ethereum);
+        // 将Web3实例保存到状态中，供后续使用
+        setWeb3(web3);
+
+        // 3. 获取智能合约 ABI + address
+        // 使用ABI和合约地址创建合约实例
+        // ABI定义了合约的方法接口，地址指定了部署的合约位置
+        const contract = new web3.eth.Contract(ABI, '0x8149E13C43953De4af8DC90a70B46046ddd3D4C4'); // 替换成自己的银行合约
+        // 将合约实例保存到状态中，用于后续的合约交互
+        setBankContract(contract);
+
+        // 4. 监听合约事件
+        // 监听合约的所有事件，从创世块开始到最新块
+        contract.getPastEvents('allEvents', {
+            filter: {},
+            fromBlock: 0,
+            toBlock: 'latest'
+        }, function(error, events){ console.log(events); })
+        .then(function(events){
+            console.log(events);
+        })
+    }
+    
     return (
         <div className="App" style={{ minHeight: '100vh', padding: '20px' }}>
             <div className="card" style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
